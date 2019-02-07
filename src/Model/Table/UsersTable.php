@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\NationalitiesTable|\Cake\ORM\Association\BelongsTo $Nationalities
  * @property \App\Model\Table\DepartmentsTable|\Cake\ORM\Association\BelongsTo $Departments
+ * @property |\Cake\ORM\Association\BelongsTo $Groups
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -50,6 +51,10 @@ class UsersTable extends Table
             'foreignKey' => 'department_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Groups', [
+            'foreignKey' => 'group_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -65,10 +70,10 @@ class UsersTable extends Table
             ->allowEmptyString('id', 'create');
 
         $validator
-            ->scalar('name')
-            ->maxLength('name', 255)
-            ->requirePresence('name', 'create')
-            ->allowEmptyString('name', false);
+            ->scalar('username')
+            ->maxLength('username', 255)
+            ->requirePresence('username', 'create')
+            ->allowEmptyString('username', false);
 
         $validator
             ->email('email')
@@ -78,7 +83,7 @@ class UsersTable extends Table
 
         $validator
             ->scalar('password')
-            ->maxLength('password', 255)
+            ->maxLength('password', 60)
             ->requirePresence('password', 'create')
             ->allowEmptyString('password', false);
 
@@ -109,9 +114,11 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['nationality_id'], 'Nationalities'));
         $rules->add($rules->existsIn(['department_id'], 'Departments'));
+        $rules->add($rules->existsIn(['group_id'], 'Groups'));
 
         return $rules;
     }

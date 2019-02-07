@@ -11,14 +11,18 @@
         <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Nationalities'), ['controller' => 'Nationalities', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Nationality'), ['controller' => 'Nationalities', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Departments'), ['controller' => 'Departments', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Department'), ['controller' => 'Departments', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="users view large-9 medium-8 columns content">
     <h3><?= h($user->name) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Name') ?></th>
-            <td><?= h($user->name) ?></td>
+            <th scope="row"><?= __('Username') ?></th>
+            <td><?= h($user->username) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Email') ?></th>
@@ -29,6 +33,14 @@
             <td><?= h($user->password) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Nationality') ?></th>
+            <td><?= $user->has('nationality') ? $this->Html->link($user->nationality->name, ['controller' => 'Nationalities', 'action' => 'view', $user->nationality->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Department') ?></th>
+            <td><?= $user->has('department') ? $this->Html->link($user->department->name, ['controller' => 'Departments', 'action' => 'view', $user->department->id]) : '' ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
@@ -37,12 +49,8 @@
             <td><?= $this->Number->format($user->gender) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Nationality Id') ?></th>
-            <td><?= $this->Number->format($user->nationality_id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Department Id') ?></th>
-            <td><?= $this->Number->format($user->department_id) ?></td>
+            <th scope="row"><?= __('Group Id') ?></th>
+            <td><?= $this->Number->format($user->group_id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Birthday') ?></th>

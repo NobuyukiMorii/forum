@@ -7,16 +7,17 @@ use Cake\ORM\Entity;
  * User Entity
  *
  * @property int $id
- * @property string $name
+ * @property string $username
  * @property string $email
  * @property string $password
- * @property \Cake\I18n\FrozenTime $birthday
+ * @property \Cake\I18n\FrozenDate $birthday
  * @property int $gender
  * @property int $nationality_id
  * @property string $description
  * @property int $department_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property int $group_id
  *
  * @property \App\Model\Entity\Nationality $nationality
  * @property \App\Model\Entity\Department $department
@@ -34,7 +35,7 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
+        'username' => true,
         'email' => true,
         'password' => true,
         'birthday' => true,
@@ -44,6 +45,7 @@ class User extends Entity
         'department_id' => true,
         'created' => true,
         'modified' => true,
+        'group_id' => true,
         'nationality' => true,
         'department' => true
     ];

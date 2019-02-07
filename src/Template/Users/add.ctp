@@ -8,6 +8,10 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Nationalities'), ['controller' => 'Nationalities', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Nationality'), ['controller' => 'Nationalities', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Departments'), ['controller' => 'Departments', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Department'), ['controller' => 'Departments', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
@@ -15,14 +19,15 @@
     <fieldset>
         <legend><?= __('Add User') ?></legend>
         <?php
-            echo $this->Form->control('name');
+            echo $this->Form->control('username');
             echo $this->Form->control('email');
             echo $this->Form->control('password');
             echo $this->Form->control('birthday');
             echo $this->Form->control('gender');
-            echo $this->Form->control('nationality_id');
+            echo $this->Form->control('nationality_id', ['options' => $nationalities]);
             echo $this->Form->control('description');
-            echo $this->Form->control('department_id');
+            echo $this->Form->control('department_id', ['options' => $departments]);
+            echo $this->Form->control('group_id');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
