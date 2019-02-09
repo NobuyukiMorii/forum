@@ -12,6 +12,10 @@
         <li><?= $this->Html->link(__('New Nationality'), ['controller' => 'Nationalities', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Departments'), ['controller' => 'Departments', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Department'), ['controller' => 'Departments', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Aro'), ['controller' => 'Aros', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Aro'), ['controller' => 'Aros', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
@@ -27,7 +31,7 @@
             echo $this->Form->control('nationality_id', ['options' => $nationalities]);
             echo $this->Form->control('description');
             echo $this->Form->control('department_id', ['options' => $departments]);
-            echo $this->Form->control('group_id');
+            echo $this->Form->control('group_id', ['options' => $groups]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

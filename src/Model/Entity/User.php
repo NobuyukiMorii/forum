@@ -19,8 +19,10 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  * @property int $group_id
  *
+ * @property \Acl\Model\Entity\Aro[] $aro
  * @property \App\Model\Entity\Nationality $nationality
  * @property \App\Model\Entity\Department $department
+ * @property \App\Model\Entity\Group $group
  */
 class User extends Entity
 {
@@ -46,8 +48,10 @@ class User extends Entity
         'created' => true,
         'modified' => true,
         'group_id' => true,
+        'aro' => true,
         'nationality' => true,
-        'department' => true
+        'department' => true,
+        'group' => true
     ];
 
     /**
@@ -58,4 +62,22 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
+
+    public function parentNode()
+    {
+        if (!$this->id) {
+            return null;
+        }
+        if (isset($this->group_id)) {
+            $groupId = $this->group_id;
+        } else {
+            $Users = TableRegistry::get('Users');
+            $user = $Users->find('all', ['fields' => ['group_id']])->where(['id' => $this->id])->first();
+            $groupId = $user->group_id;
+        }
+        if (!$groupId) {
+            return null;
+        }
+        return ['Groups' => ['id' => $groupId]];
+    }
 }

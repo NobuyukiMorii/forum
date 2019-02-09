@@ -13,6 +13,11 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+    }
+
     /**
      * Index method
      *
@@ -21,7 +26,7 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Nationalities', 'Departments']
+            'contain' => ['Nationalities', 'Departments', 'Groups']
         ];
         $users = $this->paginate($this->Users);
         $this->set(compact('users'));
@@ -37,7 +42,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Nationalities', 'Departments']
+            'contain' => ['Nationalities', 'Departments', 'Groups', 'Aros']
         ]);
 
         $this->set('user', $user);
@@ -62,7 +67,8 @@ class UsersController extends AppController
         }
         $nationalities = $this->Users->Nationalities->find('list', ['limit' => 200]);
         $departments = $this->Users->Departments->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'nationalities', 'departments'));
+        $groups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'nationalities', 'departments', 'groups'));
     }
 
     /**
@@ -88,7 +94,8 @@ class UsersController extends AppController
         }
         $nationalities = $this->Users->Nationalities->find('list', ['limit' => 200]);
         $departments = $this->Users->Departments->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'nationalities', 'departments'));
+        $groups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'nationalities', 'departments', 'groups'));
     }
 
     /**
@@ -110,4 +117,21 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function login() {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('Your username or password was incorrect.'));
+        }
+    }
+
+    public function logout() {
+        $this->Flash->success(__('Good-Bye'));
+        $this->redirect($this->Auth->logout());
+    }
+
 }

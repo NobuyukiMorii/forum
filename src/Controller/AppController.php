@@ -28,6 +28,12 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
+    public $components = [
+        'Acl' => [
+            'className' => 'Acl.Acl'
+        ]
+    ];
+
     /**
      * Initialization hook method.
      *
@@ -45,6 +51,36 @@ class AppController extends Controller
             'enableBeforeRedirect' => false,
         ]);
         $this->loadComponent('Flash');
+
+        $this->loadComponent('Auth', [
+            'authorize' => [
+                'Acl.Actions' => ['actionPath' => 'controllers/']
+            ],
+            'loginAction' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login',
+                'prefix' => false
+            ],
+            'authError' => 'You are not authorized to access that location.',
+            'flash' => [
+                'element' => 'error'
+            ]
+        ]);
 
         /*
          * Enable the following component for recommended CakePHP security settings.

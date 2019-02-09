@@ -5,13 +5,14 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Users Model
  *
  * @property \App\Model\Table\NationalitiesTable|\Cake\ORM\Association\BelongsTo $Nationalities
  * @property \App\Model\Table\DepartmentsTable|\Cake\ORM\Association\BelongsTo $Departments
- * @property |\Cake\ORM\Association\BelongsTo $Groups
+ * @property \App\Model\Table\GroupsTable|\Cake\ORM\Association\BelongsTo $Groups
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -42,6 +43,7 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Acl.Acl', ['type' => 'requester']);
 
         $this->belongsTo('Nationalities', [
             'foreignKey' => 'nationality_id',
@@ -121,5 +123,13 @@ class UsersTable extends Table
         $rules->add($rules->existsIn(['group_id'], 'Groups'));
 
         return $rules;
+    }
+
+    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity, 
+        \ArrayObject $options)
+    {
+        $hasher = new DefaultPasswordHasher;
+        $entity->password = $hasher->hash($entity->password);
+        return true;
     }
 }

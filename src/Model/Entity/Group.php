@@ -31,4 +31,9 @@ class Group extends Entity
         'modified' => true,
         'users' => true
     ];
+
+    public function parentNode()
+    {
+        return null;
+    }
 }

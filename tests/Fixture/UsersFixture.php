@@ -53,13 +53,13 @@ class UsersFixture extends TestFixture
                 'username' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
                 'password' => 'Lorem ipsum dolor sit amet',
-                'birthday' => '2019-02-07',
+                'birthday' => '2019-02-08',
                 'gender' => 1,
                 'nationality_id' => 1,
                 'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
                 'department_id' => 1,
-                'created' => '2019-02-07 22:09:17',
-                'modified' => '2019-02-07 22:09:17',
+                'created' => '2019-02-08 02:43:29',
+                'modified' => '2019-02-08 02:43:29',
                 'group_id' => 1
             ],
         ];

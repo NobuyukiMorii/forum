@@ -19,8 +19,10 @@ class UsersControllerTest extends TestCase
      */
     public $fixtures = [
         'app.Users',
+        'app.Aros',
         'app.Nationalities',
-        'app.Departments'
+        'app.Departments',
+        'app.Groups'
     ];
 
     /**
